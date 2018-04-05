@@ -8,7 +8,9 @@
 %  
 %  disp('2.(b) I would expects a pass band during the low frequencies',...
 %       ' and a 2nd order drop off at its respective frequency')
-  
+
+clear all
+
 runTime = 1; %given in seconds
 timecuts = 1000;
 dt =runTime/timecuts;
@@ -127,10 +129,13 @@ ylabel('magnitude')
 title('Fourier transform of output')
 
 %Gaussian pulse
-f = 1/0.03;
+%Vgauss = exp(-1/2*((k/ts-0.06)/(0.03))^2)
+mag = 1;
+dev = 0.03;
+delay = 0.06;
 Flist = zeros(7,1,timecuts);
 for count = 1:1:timecuts
-    Flist(1,1,count) = sin(2*pi*f*count*dt);
+    Flist(1,1,count) = exp(-((count*dt-0.06)/0.03)^2);
 end
 Vlist = zeros(7,1,timecuts);
 
@@ -149,22 +154,26 @@ Volist(1,:) = Vlist(7,1,:);
 
 
 
-figure(3)
+figure(5)
 plot((1:timecuts).*dt,Volist(1,:))
 xlabel('Time(seconds)')
 ylabel('Voltage')
-title('Vout of Sine wave')
+title('Vout of Gaussian Pulse')
 hold on
 plot((1:timecuts).*dt,V1list(1,:))
 hold off
 
-figure(4)
+figure(6)
 g = abs(fft(Volist(1,:)));
 g = g(1:(length(g)/2));
 plot((1:length(g))/timecuts,g)
 xlabel('frequency')
 ylabel('magnitude')
 title('Fourier transform of output')
+
+disp('changing the time step to be larger, makes a more inaccurate model')
+
+
       
       
       
