@@ -1,13 +1,13 @@
-% disp('2.(a) Represents a low pass circuit with amplifier. During DC conditions, the', ...
-%      'capacitor will block current however the resistors will let it', ...
-%      'pass freely. The inductor will also let it pass freely.', ...
-%      'However, once the current begins to alternate, the inductor', ...
-%      'will begin to resist the current and the capacitor will begin',...
-%      'to conduct. This will cause parralel resistance and further',...
-%      'the resistance of the circuit')
-%  
-%  disp('2.(b) I would expects a pass band during the low frequencies',...
-%       ' and a 2nd order drop off at its respective frequency')
+disp('2.(a) Represents a low pass circuit with amplifier. During DC conditions, the')
+disp('capacitor will block current however the resistors will let it')
+disp('pass freely. The inductor will also let it pass freely.')
+disp('However, once the current begins to alternate, the inductor')
+disp('will begin to resist the current and the capacitor will begin')
+disp('to conduct. This will cause parralel resistance and further')
+disp('the resistance of the circuit')
+ 
+disp('2.(b) I would expects a pass band during the low frequencies')
+disp(' and a 2nd order drop off at its respective frequency')
 
 clear all
 
@@ -81,9 +81,9 @@ plot((1:timecuts).*dt,V1list(1,:))
 hold off
 
 figure(2)
-g = abs(fft(Volist(1,:)));
-g = g(1:(length(g)/2));
-plot((1:length(g))/timecuts,g)
+g = abs(fftshift(fft(Volist(1,:))));
+plot(((1:length(g))/timecuts)-0.5,g)
+xlim([-0.05 0.05])
 xlabel('frequency')
 ylabel('magnitude')
 title('Fourier transform of output')
@@ -121,9 +121,9 @@ plot((1:timecuts).*dt,V1list(1,:))
 hold off
 
 figure(4)
-g = abs(fft(Volist(1,:)));
-g = g(1:(length(g)/2));
-plot((1:length(g))/timecuts,g)
+g = abs(fftshift(fft(Volist(1,:))));
+plot(((1:length(g))/timecuts)-0.5,g)
+xlim([-0.05 0.05])
 xlabel('frequency')
 ylabel('magnitude')
 title('Fourier transform of output')
@@ -164,9 +164,9 @@ plot((1:timecuts).*dt,V1list(1,:))
 hold off
 
 figure(6)
-g = abs(fft(Volist(1,:)));
-g = g(1:(length(g)/2));
-plot((1:length(g))/timecuts,g)
+g = abs(fftshift(fft(Volist(1,:))));
+plot(((1:length(g))/timecuts)-0.5,g)
+xlim([-0.05 0.05])
 xlabel('frequency')
 ylabel('magnitude')
 title('Fourier transform of output')
