@@ -1,5 +1,8 @@
 clear all
 
+disp('model the equation V4 - aI3 - BI3^2 -CI3^3 as a polynomial and solve for it')
+disp('This would require a solve for the polynomial per iteration as V4 changes')
+
 runTime = 1; %given in seconds
 timecuts = 1000;
 dt =runTime/timecuts;
@@ -10,18 +13,10 @@ R2=2;
 L1=0.2;
 R3=10;
 a=100;
-b=-50;
-c=300;
+b=50;
+c=1;
 R4=0.1;
-Ro=1000;
-
-
-%    V1    V2     V3          V5       IL3
-% G = [-1/R1, 0,     0,          0,      0; ...%N1
-%      1/R1 , -1/R2, 0,          0,      0; ...%N2
-%      0,     0,     -1/R3,      0,      0; ...%N3
-%      0,     0,     -a/(R3*R4), -1/R4,  0; ...%N4
-     
+Ro=1000;     
 
 C = [  0, 0,   0, 0, 0, 0, 0; ...
      -C1,C1,   0, 0, 0, 0, 0; ...
@@ -31,11 +26,17 @@ C = [  0, 0,   0, 0, 0, 0, 0; ...
        0, 0,   0, 0, 0, 0, 0; ...
        0, 0,   0, 0, 0, 0, 0];
    
+   
+   
+I3poly = [c b a 0];
+I3roots = roots(I3poly);
+
+   
 G = [     1,             0,  0,    0,                  0,     0,            0; ...
       -1/R1, (1/R2 + 1/R1), -1,    0,                  0,     0,            0; ...
           0,             1,  0,   -1,                  0,     0,            0; ...
           0,             0, -1, 1/R3,                  0,     0,            0; ...
-          0,             0,  0,    0, (-a-b^(-2)-c^(-3)),     1,            0; ...
+          0,             0,  0,    0,         I3roots(2),     1,            0; ...
           0,             0,  0, 1/R3,                 -1,     0,            0; ...
           0,             0,  0,    0,                  0, -1/R4, (1/R4 +1/Ro)];
    
@@ -52,6 +53,7 @@ for count  = 2:1:timecuts
     A = C/dt +G;
     
     Vlist(:,:,count) = A\(C*Vlist(:,:,count-1)/dt +Flist(:,:,count));
+    Flist(:,:,count) = Vlist(:,:,count);
 end
       
 V1list(1,:) = Vlist(1,1,:);
