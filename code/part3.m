@@ -22,7 +22,7 @@ C = [  0, 0,   0,  0, 0, 0, 0, 0; ... V1
        0, 0,   0,  0, 0, 0, 0, 0; ... I3
        0, 0,   0, Cn, 0, 0, 0, 0; ... V4
        0, 0,   0,  0, 0, 0, 0, 0; ... In
-       0, 0,   0,  0, 0, 0, 0, 0];   %Vo
+       0, 0,   0,  0, 0, 0, 0, 0]   %Vo
    
    %     V1             V2  I1    V3  I3     V4  In            Vo  
 G = [     1,             0,  0,    0,  0,     0,  0,            0; ... V1
@@ -32,9 +32,8 @@ G = [     1,             0,  0,    0,  0,     0,  0,            0; ... V1
           0,             0,  0,    0, -a,     1,  0,            0; ... I3
           0,             0,  0, 1/R3, -1,     0, -1,            0; ... V4
           0,             0,  0,    0,  0,     0,  1,            0; ... In
-          0,             0,  0,    0,  0, -1/R4,  0, (1/R4 +1/Ro)];   %Vo
+          0,             0,  0,    0,  0, -1/R4,  0, (1/R4 +1/Ro)]   %Vo
    
-
 %Gaussian pulse
 mag = 1;
 dev = 0.03;
@@ -64,7 +63,7 @@ figure(7)
 plot((1:timecuts).*dt,Volist(1,:))
 xlabel('Time(seconds)')
 ylabel('Voltage')
-title('Vout of Gaussian Pulse with In and Cn')
+title('Voltage(in/out) of Gaussian Pulse with In and Cn')
 hold on
 plot((1:timecuts).*dt,V1list(1,:))
 hold off
@@ -72,10 +71,10 @@ hold off
 figure(8)
 g = abs(fftshift(fft(Volist(1,:))));
 plot(((1:length(g))/timecuts)-0.5,g)
-xlim([-0.005 0.005])
+xlim([-0.05 0.05])
 xlabel('frequency')
 ylabel('magnitude')
-title('Fourier transform of output')
+title('Fourier transform of output(In and Cn)')
 
 %changing Cn
 Cn=0.0001;
@@ -119,7 +118,7 @@ figure(9)
 plot((1:timecuts).*dt,Volist(1,:))
 xlabel('Time(seconds)')
 ylabel('Voltage')
-title('Vout of Gaussian Pulse with In and Cn Cn=0.0001')
+title('Voltage(in/out) of Gaussian Pulse with In and Cn=0.0001')
 hold on
 plot((1:timecuts).*dt,V1list(1,:))
 hold off
@@ -130,7 +129,7 @@ plot(((1:length(g))/timecuts)-0.5,g)
 xlim([-0.05 0.05])
 xlabel('frequency')
 ylabel('magnitude')
-title('Fourier transform of output')
+title('Fourier transform of output(Cn=0.0001)')
 
 %new Cn
 Cn=0.001;
@@ -175,7 +174,7 @@ figure(11)
 plot((1:timecuts).*dt,Volist(1,:))
 xlabel('Time(seconds)')
 ylabel('Voltage')
-title('Vout of Gaussian Pulse with In and Cn Cn=0.001')
+title('Voltage of Gaussian Pulse with In and Cn=0.001')
 hold on
 plot((1:timecuts).*dt,V1list(1,:))
 hold off
@@ -186,7 +185,7 @@ plot(((1:length(g))/timecuts)-0.5,g)
 xlim([-0.05 0.05])
 xlabel('frequency')
 ylabel('magnitude')
-title('Fourier transform of output')
+title('Fourier transform of output(Cn=0.001)')
 
 
 %new Cn
@@ -232,7 +231,7 @@ figure(13)
 plot((1:timecuts).*dt,Volist(1,:))
 xlabel('Time(seconds)')
 ylabel('Voltage')
-title('Vout of Gaussian Pulse with In and Cn Cn=0.01')
+title('Voltage(in/out) of Gaussian Pulse with In and Cn=0.01')
 hold on
 plot((1:timecuts).*dt,V1list(1,:))
 hold off
@@ -243,7 +242,9 @@ plot(((1:length(g))/timecuts)-0.5,g)
 xlim([-0.05 0.05])
 xlabel('frequency')
 ylabel('magnitude')
-title('Fourier transform of output')
+title('Fourier transform of output(Cn=0.01)')
+
+disp('3.(c.6)Raising the Cn of the circuit tends to elongate the bandwidth')
 
 clear all
 %changing timesteps
@@ -321,7 +322,7 @@ plot(((1:length(g))/timecuts)-0.5,g)
 xlim([-0.5 0.5])
 xlabel('frequency')
 ylabel('magnitude')
-title('Fourier transform of output')
+title('Fourier transform of output(timesteps=100)')
 
 %new timestep
 clear all
@@ -388,7 +389,7 @@ figure(17)
 plot((1:timecuts).*dt,Volist(1,:))
 xlabel('Time(seconds)')
 ylabel('Voltage')
-title('Vout of Gaussian Pulse with In and Cn timesteps=10000')
+title('Voltage(in/out) of Gaussian Pulse with In and Cn timesteps=10000')
 hold on
 plot((1:timecuts).*dt,V1list(1,:))
 hold off
@@ -399,9 +400,15 @@ plot(((1:length(g))/timecuts)-0.5,g)
 xlim([-0.005 0.005])
 xlabel('frequency')
 ylabel('magnitude')
-title('Fourier transform of output')
+title('Fourier transform of output(timesteps=10000)')
       
       
+
+disp('3.(c.7) changing the timesteps with the In and Cn added,')
+disp('causes the peak positions to change, and the noise to become more or less')
+disp(' significant. Raising the time steps reduces noise, and lowering it increases it.')
+disp('This is suspected to occur because it is changing how long a noise signal')
+disp('Will affect the circuit, including some of its transience')
       
       
       
